@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+
+
+
+  
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>PoW Problems</title>
+  
+
+  
+  
+  <style type="text/css"></style>
+  
+  <link rel="stylesheet" href="parwidths.css" type="text/css"></head><body>
+<ahref="index.html"><a href="index.html">Home Page</a><br>
+</ahref="index.html">
+<h1>Problems with Proof-of-Work</h1>
+<p>We all know that Proof-of-Work consumes tons of electricity. It's
+easy to say that because a lot of work in Bitcoin simply becomes heat
+(and doesn't actually result in the addition of a new block) that
+Proof-of-Work is inefficient. <br>
+</p>
+<p>Well, I can agree that Proof-of-Work produces a lot of unnecessary heat, but I'd like to properly frame the discussion.<br>
+</p>
+
+<h2>Satoshi Nakamoto's Contribution<br>
+</h2>
+<p>Tell me, what was Satoshi Nakamoto's technical contribution that made Bitcoin possible? Why, blockchain of course.</p>
+<p><span style="font-weight: bold;">WRONG!</span> Blockchains (i.e.
+information published in discrete blocks which reference the hash of
+earlier blocks) have existed for decades. Consider this <a href="https://www.anf.es/pdf/Haber_Stornetta.pdf">application of blockchains to digital timestamping</a> from the year 1991 (5 years before I was born).<br>
+<br> Oh, maybe it was the idea of a distributed ledger? No, distributed
+database software has also existed for decades. While the idea of
+having a publicly-joinable distributed database keeping track of
+transactions may have been novel, alone it would not have made Bitcoin
+possible, since it did not solve the double spend problem.</p>
+<p>Oh, well then obviously Satoshi solved the double spend problem, and <span style="font-style: italic;">that's</span>
+what made Bitcoin possible. Wrong again! He didn't solve
+the double spend problem; that was solved decades ago with Byzantine
+fault-tolerant algorithms. Here is <a href="http://pmg.csail.mit.edu/papers/osdi99.pdf">one such algorithm which gained traction in the 90s</a> (I believe it is currently used by Hyperledger, but I haven't checked that fact).</p>
+<p>From the title of this page, you can probably guess where I'm headed
+with this. Satoshi Nakamoto invented Proof-of-Work, and maybe <span style="font-style: italic;">that's</span> what made Bitcoin possible. Not quite... he didn't invent Proof-of-Work, but we're finally on the right track.</p>
+<h2>Nakamoto Consensus</h2>
+<p>Satoshi's big idea was using Proof-of-Work (i.e. an irrefutable
+proof that your computer completed a large number of operations) as a <span style="font-style: italic;">consensus mechanism</span>.</p>
+<p>One early application of Proof-of-Work was to cut down on e-mail
+spam. A proof-of-work problem could be designed to take a few seconds
+on an ordinary computer, and every time you sent an e-mail, you could
+include proof that your computer did the work. For regular e-mailing
+needs, the few seconds of computer time is no problem. If you're an
+e-mail spammer on the other hand, sending thousands of e-mails and
+including a proof of work on each one would start to get expensive.</p>
+<p>I suppose the idea was that e-mail clients would start rejecting
+e-mails that didn't have proof of work, but for whatever reason this
+never caught on. Too bad, it seems like a good idea.<br>
+</p>
+<p></p>
+<hr style="width: 100%; height: 2px;">This page was created on July 26, 2018 by Marco Merlini<br>
+
+This page was updated on July 26, 2018 by Marco Merlini<br>
+
+<a href="PoW_Problems_fr.html">Version française</a></body></html>

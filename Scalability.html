@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+
+
+
+
+
+  
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8"><title>Scalability</title>
+  
+
+  
+  
+  <link rel="stylesheet" href="parwidths.css" type="text/css"></head><body>
+<a href="index.html">Home Page</a><br>
+
+<h1>Scalabilty in Distributed Ledger
+Technology </h1>
+
+<p><i>Thanks to John Adler and Ryan
+Berryhill who </i><i>explained this to me. </i></p>
+
+<p>Everybody knows it...
+cryptocurrencies have problems with scalability. To fix scalability, we
+need to replace the slow, power-hungry Proof-of-Work with the fast,
+svelte Proof-of-Stake, right? </p>
+
+<p><b>WRONG!</b> <i>Proof-of-Work is
+not the source of the scalability problem, and Proof-of-Stake will not
+solve it! </i></p>
+
+<p>Here is how I define the
+scalability problem:</p>
+
+<blockquote>
+  <p>The amount of work <b>each</b> node in a distributed ledger
+must do is O(n) in the number of transactions on the network.<i> </i></p>
+</blockquote>
+
+<p>The strong safety guarantees in the
+face of total decentralization carry a cost: <i>each and every node</i>
+must validate <i>each and every transaction</i>. Defined in this way,
+we can distinguish two types of scalability solutions:</p>
+
+<ul>
+
+  <li>Not forcing all nodes to validate all transactions</li>
+  <li>Somehow changing the O(n) time to validate all transactions, maybe through parallelization.
+</li>
+  <li><span style="font-style: italic;">(Secret option: combine both of
+these)</span></li>
+</ul>
+
+<h2>Not forcing all nodes to validate
+all transactions: Sharding</h2>
+<p>Sharding makes use of the (fairly obvious) idea that maybe we really
+don't need every single node to validate every single transaction. One
+thousand valdidations ought to be enough for anyone! Maybe we can
+"shard" the network into smaller pieces that each take care of their
+own subset of all transactions? </p>
+<p>Implementing sharding is really not easy, mind you. How do you
+select which nodes will validate a particular transaction? What happens
+if one ore more of those nodes go offline or are dishonest? How will
+transaction fees be distributed?</p>
+<p>Ethereum's end goal has always been to incorporate sharding, and they have a <a href="https://github.com/ethereum/wiki/wiki/Sharding-FAQs">great big FAQ page</a> which should satisfy your immediate curiosity.</p><h2>Improving O(n) Validation Time</h2>
+<p>Consider this: if validating transactions was instantaneous, then
+maybe blockchain wouldn't suck. In this case, blocks could be
+arbitrarily large, and get validated in seconds. You would have all the
+benefits of a global, totally decentralized ledger, without the
+comparatively high costs and slow transaction times.</p>
+<p>We can further classify this class of solutions into two categories:</p>
+<ul>
+  <li>Reducing validation work by a constant factor</li>
+  <li>Reducing the complexity class</li>
+</ul>
+<h3 style="margin-left: 40px;">
+Reducing Work by a Constant Factor</h3>
+<p style="margin-left: 40px;">The most immediately obvious method of reducing validation work is to parallelize it. Vitalik has suggested <a href="https://github.com/ethereum/EIPs/issues/648">doing this for Ethereum</a>, but Ethereum really does not lend itself well to parallelization.</p>
+<p style="margin-left: 40px;">One idea would be to create an all-new
+blockchain platform specifically designed to accommodate a high degree
+of parallelizability. If a smart contract language is desired, this
+would require designing an all-new VM, possibly disallowing
+Turing-completeness. </p>
+<p style="margin-left: 40px;">A complementary idea would be some kind of hardware acceleration. </p>
+<h3 style="margin-left: 40px;">Reducing the Complexity Class</h3>
+<p style="margin-left: 40px;">This seems unlikely, and I certainly have
+no ideas for how to do this. Basically, if you could somehow validate a
+list of n transactions in O(lg(n)) time or something, then you would
+have solved the scalability problem very directly.</p>
+<h2>Secret Option: Both</h2>
+<p>To be sure, either one of the previously presented solutions would
+probably be sufficient. However, it's interesting to note that
+developments in either area are orthogonal; that is, they could easily
+be used at the same time, offering even faster/cheaper transaction
+validation.</p>
+<hr style="width: 100%; height: 2px;">This page was created on July 26, 2018 by Marco Merlini<br>
+This page was updated on July 26, 2018 by Marco Merlini<br>
+<a href="Scaling_fr.html">Version française</a>
+<p>
+</p>
+
+
+</body></html>

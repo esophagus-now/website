@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+
+
+
+<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Problèmes PdT</title><style type="text/css">
+#disclaimer {
+  border-style: solid;
+  border-width: 1pt;
+}
+
+</style><link rel="stylesheet" href="parwidths.css" type="text/css"></head><body>
+<ahref="index.html"><a href="index_fr.html">Page d'accueil</a></ahref="index.html"><span style="font-weight: bold;"><br>
+</span>
+<p id="disclaimer">J'ai fait de mon mieux pour traduire la terminologie
+propre à la blockchain. Malheureusement, ce n'est pas facile de
+vérifier si j'ai bien fait. Je vous invite de me corriger; S.V.P.
+envoyez vos suggestions à <a href="marco.merlini@utoronto.ca">marco.merlini@utoronto.ca</a>.<br></p>
+<span style="font-weight: bold;"></span>
+<h1>Les Défauts du Proof-of-Work<br>
+</h1>
+
+<p>Tout le monde le sais: le Proof-of-Work consomme copieusement
+l'électricité. On peut vite tirer une conclusion: vu qu'une grande
+fraction de l'électricité qui sert à faire marcher le Bitcoin ne fait
+rien que de créer de la chaleur, le Proof-of-Work doit être très inefficace. <br>
+</p>
+
+<p>Je suis d'accord que le Proof-of-Work produit beaucoup de chaleur
+inutile, mais j'aimerais ajouter un peu de contexte à la discussion.<br>
+</p>
+
+
+<h2>La Contribution de Satoshi Nakamoto<br>
+</h2>
+
+<p>Dites, quel était la contribution technique de Satoshi Nakamoto qui
+a rendu possible le Bitcoin? Bien sûr, il faut que ça soit la
+blockchain. <br>
+</p>
+<p><span style="font-weight: bold;">FAUX!</span> Les blockchains
+(c.-à-d. de l'information organizé en blocs, qui chacun fait référence
+à un bloc antérieur) ont existé depuis longtemps. Voyez, par exemple, <a href="https://www.anf.es/pdf/Haber_Stornetta.pdf">cette usage des blockchains pour faire un "timestamp" numérique</a>, daté de 1991 (5 ans avant ma propre naissance). <br>
+</p>
+
+<p>Peut-être la grande contribution était l'idée d'un registre
+distribué? Non, des logiciels de banque de données distribuées existent
+aussi depuis longtemps. Ceci dit, l'idée d'une banque de données
+distribuée librement rejoignable qui sert à enregistrer des transaction
+était néanmoins assez nouvelle. Par contre, cette idée seule n'est pas
+assez pour naître le Bitcoin, vu que ça ne résous pas le problème de la
+double dépense (le "double spend problem").<br>
+<br>
+Ah bon! C'est donc le fait d'avoir résolu le problème de la double
+dépense qui a pu mener à l'existence du Bitcoin. Toujours pas! Satoshi
+n'a pas techniquement résolu ce problème; la solution existe depuis
+longtemps: les algorithmes tolérants aux fautes byzantines. Voici <a href="http://pmg.csail.mit.edu/papers/osdi99.pdf">un algorithme qui date des années 90</a>, et que je crois est utilisé par Hyperledger (je n'ai pas vérifié ce fait).<br></p>
+
+<p>Alors c'est quoi, finalement? Le titre de cette page est un indice.
+La contribution de Satoshi était-elle donc l'invention du
+Proof-of-Work,
+et que c'est ça qui nous a donné le Bitcoin? Pas tout à fait... Satoshi
+n'est pas l'inventeur du Proof-of-Work, mais on se rapproche finalement
+à la
+bonne réponse.<br>
+</p>
+
+<h2>Le Consensus Nakamoto<br>
+</h2>
+
+<p>L'idée de Satoshi était d'utiliser le Proof-of-Work (c.-à-d. une
+preuve indiscutable que ton ordinateur a effectuer une grande quantité
+d'opérations) comme <span style="font-style: italic;">méchanisme de consensus</span>.<br>
+</p>
+
+
+<p>Un des usages originaux du Proof-of-Work était pour réduire les
+"pourriels" (je viens de découvrir ce très bon mot-valise de "pourri"
+et de "courriel"). Voici l'idée: à chaque fois que vous désirez envoyer
+un courriel, vous y ajouter une preuve que votre ordinateur a dû passer
+plusieurs secondes à calculer. Pour l'usage quotidien du courriel, ces
+petites secondes ne sont pas un problème. Par exemple, si vous désirez
+envoyer des pourriels à des milliers d'addresses, tous ces preuves de
+calculs s'accumulent et les coûts augmentent.<br>
+</p>
+<p>Je suppose que l'idée était que tous les clients de courriel
+commencerait à rejeter des courriels qui n'incluaient pas de preuve de
+calculs, mais pour une raison ou une autre ça n'a jamais pris. Dommage,
+à mon avis c'est une bonne idée.<br>
+</p>
+
+
+Ce qui reste à expliquer:<br>
+<ul>
+  <li>L'usage du Proof-of-Work comme méchanisme de consensus</li>
+  <li>Comparaison aux algorithmes tolérants aux fautes byzantines</li>
+  <li>Le Proof-of-Stake, et ses propres défauts</li>
+  <li>D'autres remplacements possibles du Proof-of-Work<br>
+  </li>
+</ul>
+
+<hr style="width: 100%; height: 2px;">Cette page a été créée le 26
+Juillet,
+2018 par Marco Merlini<br>
+
+
+Cette page a été modifiée le 26 Juillet, 2018 par Marco Merlini<br>
+
+
+<a href="PoW_Problems.html">English version</a><a href="index_fr.html"></a>
+
+  
+
+</body></html>
