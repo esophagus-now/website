@@ -5,6 +5,7 @@
 
 
 
+
   
   <meta http-equiv="content-type" content="text/html; charset=UTF-8"><title>Scalability</title>
   
@@ -25,7 +26,7 @@ cryptocurrencies have problems with scalability. To fix scalability, we
 need to replace the slow, power-hungry Proof-of-Work with the fast,
 svelte Proof-of-Stake, right? </p>
 
-<p><b>WRONG!</b> <i>Proof-of-Work is
+<p><b>NOPE!</b> <i>Proof-of-Work is
 not the source of the scalability problem, and Proof-of-Stake will not
 solve it! </i></p>
 
@@ -87,6 +88,9 @@ Turing-completeness. </p>
 no ideas for how to do this. Basically, if you could somehow validate a
 list of n transactions in O(lg(n)) time or something, then you would
 have solved the scalability problem very directly.</p>
+<p style="margin-left: 40px;">Note that sharding sort of falls into this class, in that not every node verifies all n transactions in the network.<br>
+</p>
+
 <h2>Secret Option: Both</h2>
 <p>To be sure, either one of the previously presented solutions would
 probably be sufficient. However, it's interesting to note that

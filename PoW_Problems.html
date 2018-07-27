@@ -4,6 +4,9 @@
 
 
 
+
+
+
   
   <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>PoW Problems</title>
   
@@ -18,7 +21,7 @@
 <h1>Problems with Proof-of-Work</h1>
 <p>We all know that Proof-of-Work consumes tons of electricity. It's
 easy to say that because a lot of work in Bitcoin simply becomes heat
-(and doesn't actually result in the addition of a new block) that
+(and doesn't directly result in the addition of a new block) that
 Proof-of-Work is inefficient. <br>
 </p>
 <p>Well, I can agree that Proof-of-Work produces a lot of unnecessary heat, but I'd like to properly frame the discussion.<br>
@@ -27,16 +30,15 @@ Proof-of-Work is inefficient. <br>
 <h2>Satoshi Nakamoto's Contribution<br>
 </h2>
 <p>Tell me, what was Satoshi Nakamoto's technical contribution that made Bitcoin possible? Why, blockchain of course.</p>
-<p><span style="font-weight: bold;">WRONG!</span> Blockchains (i.e.
-information published in discrete blocks which reference the hash of
-earlier blocks) have existed for decades. Consider this <a href="https://www.anf.es/pdf/Haber_Stornetta.pdf">application of blockchains to digital timestamping</a> from the year 1991 (5 years before I was born).<br>
-<br> Oh, maybe it was the idea of a distributed ledger? No, distributed
+<p><span style="font-weight: bold;">NOPE!</span> Blockchains, which are nothing more than information published in discrete blocks which reference the hash of
+earlier blocks, have existed for decades. Consider this <a href="https://www.anf.es/pdf/Haber_Stornetta.pdf">application of blockchains to digital timestamping</a> from the year 1991 (5 years before I was born).<br>
+<br> Okay, maybe it was the idea of a distributed ledger? No, distributed
 database software has also existed for decades. While the idea of
 having a publicly-joinable distributed database keeping track of
 transactions may have been novel, alone it would not have made Bitcoin
 possible, since it did not solve the double spend problem.</p>
 <p>Oh, well then obviously Satoshi solved the double spend problem, and <span style="font-style: italic;">that's</span>
-what made Bitcoin possible. Wrong again! He didn't solve
+what made Bitcoin possible. Still no! Technically he didn't solve
 the double spend problem; that was solved decades ago with Byzantine
 fault-tolerant algorithms. Here is <a href="http://pmg.csail.mit.edu/papers/osdi99.pdf">one such algorithm which gained traction in the 90s</a> (I believe it is currently used by Hyperledger, but I haven't checked that fact).</p>
 <p>From the title of this page, you can probably guess where I'm headed
@@ -44,6 +46,10 @@ with this. Satoshi Nakamoto invented Proof-of-Work, and maybe <span style="font-
 <h2>Nakamoto Consensus</h2>
 <p>Satoshi's big idea was using Proof-of-Work (i.e. an irrefutable
 proof that your computer completed a large number of operations) as a <span style="font-style: italic;">consensus mechanism</span>.</p>
+<h3>Proof-of-Work for Spam Reduction<br>
+
+</h3>
+
 <p>One early application of Proof-of-Work was to cut down on e-mail
 spam. A proof-of-work problem could be designed to take a few seconds
 on an ordinary computer, and every time you sent an e-mail, you could
@@ -51,13 +57,89 @@ include proof that your computer did the work. For regular e-mailing
 needs, the few seconds of computer time is no problem. If you're an
 e-mail spammer on the other hand, sending thousands of e-mails and
 including a proof of work on each one would start to get expensive.</p>
+
 <p>I suppose the idea was that e-mail clients would start rejecting
 e-mails that didn't have proof of work, but for whatever reason this
 never caught on. Too bad, it seems like a good idea.</p>
+<h3>What Would Happen if Bitcoin Suddenly Stopped Requiring Proof-of-Work?</h3>
+<p>In my opinion, the best way to understand the role of Proof-of-Work
+in Bitcoin is to consider what happens without it. Let's write down the
+series of steps that would need to occur for a transaction to be
+validated in this scenario:</p>
+<ol>
+<li>A user creates a transaction, and sends it to the network</li><ul><li>This transaction (along with many others) are distributed to the entire Bitcoin network through some peer to peer protocol<br><br></li></ul><li>Miner nodes validate all incoming transactions by "testing" them against their local copy of the blockchain.<br><br></li><li>Miner nodes assemble a number of valid transactions into a block, and sends it out to the network. <span style="font-style: italic;">They will add this newest block to the end of the longest chain of blocks they are aware of. </span>Shorter chains are summarily rejected.<br></li><ul><li>These blocks are distributed to the entire Bitcoin network through some peer to peer protocol<br><br></li></ul><li>Nodes
+receiving a newly published block ensure it is valid. If so, they keep
+it. Once several more blocks are added on top of it, they can be pretty
+sure it now belongs to an unalterable history</li>
+</ol>
+<p>The only difference between this procedure and the procedure
+involving proof of work is a missing instruction is step 3: after
+assembling the transactions, the miner finds the nonce that causes the
+block hash to be below the target difficulty.</p>
+<p>So what's wrong with this approach?<br>
+</p>
+<p><span style="text-decoration: underline;">Problem 1: Highly divergent histories</span><br>
+</p>
+<p style="margin-left: 40px;">In this scenario, producing a block is
+very fast, and crucially, takes all miners on the network roughly the
+same amount of time to compute. This means that in step 3 thousands and
+thousands of new blocks are being sent out, and many of them will be
+different from the rest. When it comes time to add a new block, there
+are thousands of chains of equal length... which one do you choose? You
+could say that this is a significant lack of consensus, in that
+everybody is arguing for their own personal view of reality.</p>
+<p><span style="text-decoration: underline;">Problem 2: Easy history rewrite attack</span><br>
+</p>
+<p style="margin-left: 40px;">There's another large problem: any miner M can go to a block B in the past, and
+very quickly invent a number of fake blocks on top of B. This would
+create a new chain off of B, and if M can outrun everybody else (who
+are currently having a big argument over the true history)then M's fake blocks would be accepted. This is not good. </p>
+<p>Proof-of-Work solves problem 1 by ensuring that there are only a
+small handful of possible chains to work on at any given time. How so?
+Because solving Bitcoin's Proof-of-Work puzzle is pretty much random
+chance. All the miners are "buying lottery tickets" (every nonce they
+pay the electricity costs to try entitles them to one chance to hit the
+jackpot) and the odds of two miners finding a nonce around the same time is much lower. <br>
+</p>
+
+<p>Problem 2 is solved by... solving problem 1. In order to mount a
+successful history rewrite attack, you must be able to produce new
+blocks faster than the "honest" chain can produce them. In the worst
+case, having n possible chains to mine from (i.e. there are n chains
+currently of equal length) divides Bitcoin's combined hashing power
+into n equal parts. Provided that the sum total hashing power divided
+by n is still larger than any one malcious entity's hashing power, the
+honest chain will grow faster and a history rewrite attack is virtually
+impossible. This is why reducing the number of possible chains (a.k.a.
+"soft forks") also acts to prevent these attacks.</p>
+<h3>Why is Bitcoin's Block Time 10 Minutes, but Ethereum's is 12 Seconds?</h3>
+<p>It's important to note that Proof-of-Work blockchains are dynamically setting a difficulty parameter to ensure a relatively constant (expected) block time. <br>
+</p>
+<p>Right now I can't give a concrete answer to why these particular times were chosen. One thing I <span style="font-style: italic;">can</span>
+say though is that the expected block time has to be longer than the
+expected time to distribute a block in the network. Otherwise, we're
+back to problem 1 in the last section (highly divergent histories),
+which of course leads to problem 2 (easy history rewrite attacks).<br>
+</p>
+<h2>Nakamoto Consensus vs. BFT Algorithms</h2>
+<p>I'm not sure how to approach this right now. BFT algorithms have
+large communication overhead, and bitcoin has an expected number of
+nonces to try. Some BFT algorithms don't ensure liveness, but then
+again neither does Bitcoin.&nbsp;</p>
+<h2>Theoretical Minimum Energy Costs for Nakamoto Consensus<br>
+</h2>
+
+<p><br>
+</p>
 <p>Coming soon:</p>
+
+
 <ul>
-  <li>How Proof-of-Work is used to make a consensus mechanism</li>
+  
   <li>Comaprison to BFT algorithms</li>
+  <li>Minimum possible energy costs for Bitcoin (entropy &amp; thermodynamics argument)<br>
+  </li>
+
   <li>The problems with Proof-of-Stake</li>
   <li>Other replacement ideas for Proof-of-Work<br>
   </li>
@@ -66,6 +148,6 @@ never caught on. Too bad, it seems like a good idea.</p>
 <p></p>
 <hr style="width: 100%; height: 2px;">This page was created on July 26, 2018 by Marco Merlini<br>
 
-This page was updated on July 26, 2018 by Marco Merlini<br>
+This page was updated on July 27, 2018 by Marco Merlini<br>
 
 <a href="PoW_Problems_fr.html">Version française</a></body></html>
