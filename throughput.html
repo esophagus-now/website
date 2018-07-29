@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+
+
+
+<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Increasing Throughput</title><style type="text/css"></style><link rel="stylesheet" href="parwidths.css" type="text/css"></head><body><a href="index.html">Home page</a><br>
+<h1>Increasing Blockchain Transaction Throughput</h1>
+<p><span style="font-style: italic;">Thanks to Neil Veira and John Adler who talked this through with me.</span></p>
+<p>Everybody has heard this statistic a million times: "Visa can handle
+twelve quadrillion transactions per second but Bitcoin only pushes one
+through during a full moon" (direct quote from Queen Elizabeth II
+herself).</p>
+<p> Right now blockchain sucks. Transactions are too slow and too expensive, and there's no two ways about it.&nbsp;</p>
+<h2>The Major Players in the Throughput Game<br>
+</h2>
+
+<p><img alt="" src="images/blockdiagramthing_numbered_v2.png">
+</p>
+<p><span style="font-weight: bold;">Block Time:</span> The (expected)
+amount of real time it takes to mine a new block. In Bitcoin and
+Ethereum (which use Proof-of-Work) the network dynamically controls a
+difficulty parameter to keep expected block times at 10 minutes and 12
+seconds respectively. In a Proof-of-Stake system, the block time could
+be a lot easier to accurately control, but there would be issues
+involving synchronizing clocks.</p>
+<p><span style="font-weight: bold;">Block Size:</span> I'm being deliberately vague here. Block
+size is a metric for "how much stuff" is in a block. In Bitcoin, you
+could say that it is the number of transactions. In Ethereum, you could
+say it is the total gas. The problem with just using a size in bytes is
+that it isn't representative of the amount of work that block performs.
+Just a few bytes in Ethereum could be EVM code for a loop with a
+million iterations.</p>
+<p><span style="font-weight: bold;">Validation Rate:</span> This is the
+number of transactions which can be validated per unit time. I'm not
+sure if this is wholly meaningful for Ethereum, where "total gas value
+of transactions per unit time" may be a better metric. Anyway, this is
+a qualitaative discussion so try not to get mired in the details.</p>
+<p><span style="font-weight: bold;">Network Latency:</span> I'm not
+sure exactly what quantity this should represent. You could say it's
+the average time to send 1 kB to a peer on the network, or you could
+say it's the average time for 1 kB to reach <span style="font-style: italic;">all</span> peers on the network. I'll come back and fix up this definition when I have a better idea myself.</p>
+<p><span style="font-weight: bold;">Transaction Throughput:</span> The
+holy grail, that most coveted of all achievements. The average
+Transactions per Second (TpS) your blockchain is capable of pushing
+through. Once again, TpS may not be a meaningful metric for all
+blockchain platforms. Ethereum's speed may be better characterized by
+how many <span style="font-style: italic;">computations</span> per second it is pushing through (which is measured in units of gas/second).</p>
+<p style="font-weight: bold;">Relationships:</p>
+<ol>
+  <li>For reasons discussed in more detail below, you will want to set
+your block time to be greater than the network latency by some safety
+margin. In PoW blockchains, this is necessary to prevent a large amount
+of orphaned blocks, and in PoS you need to make sure everybody has seen
+a block before selecting the creator of the next one.<br>
+    <br>
+  </li>
+  <li>This link is due to miner economics. Although I'm not entirely
+sure how to analyze this yet, miners will usually strike a balance
+between including a lot of transaction in order to increase the
+transaction fees they collect, but not including so many so as to
+lengthen validation. The longer a miner spends validating, the less
+time is available to compute hashes. Furthermore, other miners in the
+network are less likely work off a large block since <span style="font-style: italic;">they</span> will have to perform the validation as well.<br>
+    <br>
+  </li>
+  <li>Although you can do some really tricky things to mitigate this
+effect, having larger blocks (and therefore larger amounts of data to
+broadcoast among nodes) does increase the expected amount of time for
+communication.<br>
+    <br>
+  </li>
+  <li>Finally,
+transaction throughput is essentially (Block Size ÷ Block Time). Please
+resist the urge to split hairs; this is a qualitative discussion only!<br>
+  </li>
+</ol>
+<h2>Nuances of Choosing a Block Time</h2>
+<p>Most (if not all) PoW blockchains just choose a block time and the
+network dynamically updates its difficulty in order to maintain it. We
+will assume this model for the rest of the discussion.</p>
+<h3>PoW Block Time Probability Distribution</h3>
+<p>To the best of my understanding, in a Proof-of-Work blockchain the
+block times are governed by an exponential distribution. To rigorously
+justify this is tricky (especially for me, since I'm very unsure when
+it comes to stats) but I'll have to come back to this another time
+anyway.</p>
+<p>So let's start with the PDF and CDF of an exponential distribution, with Bitcoin's mean of 10 minutes:</p>
+<p><br>
+</p>
+<hr style="width: 100%; height: 2px;">This page was created on July 28, 2018 by Marco Merlini<br>
+
+
+This page was updated on July 29, 2018 by Marco Merlini<br>
+Pas encore traduit en français<br>
+
+</body></html>
