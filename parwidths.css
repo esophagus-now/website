@@ -4,3 +4,9 @@ p {
 li {
   max-width: 600px;
 }
+img {
+  margin-left: 50px;
+  width: 500px;
+  height: auto;
+}
+
