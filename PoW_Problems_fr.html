@@ -5,6 +5,7 @@
 
 
 
+
 <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Problèmes PdT</title><style type="text/css">
 #disclaimer {
   border-style: solid;
@@ -73,8 +74,11 @@ bonne réponse.<br>
 
 <p>L'idée de Satoshi était d'utiliser le Proof-of-Work (c.-à-d. une
 preuve indiscutable que ton ordinateur a effectué une grande quantité
-d'opérations) comme <span style="font-style: italic;">méchanisme de consensus</span>.<br>
-</p>
+d'opérations) comme <span style="font-style: italic;">méchanisme de consensus</span>.</p>
+<h3>Le Proof-of-Work pour Réduire Les Pourriels<br>
+
+</h3>
+
 
 
 <p>Un des usages originaux du Proof-of-Work était pour réduire les
@@ -87,11 +91,54 @@ calculs s'accumulent et les coûts augmentent.<br>
 </p>
 <p>Je suppose que l'idée était que les courriels qui n'incluaient pas
 cette preuve de calculs seraient rjetés, mais pour une raison ou une
-autre on a abandonné cette stratégie. Dommage,
+autre on a abandonné cette <br>
+stratégie. Dommage,
 à mon avis c'est une bonne idée.<br>
 </p>
-
-
+<h3>Le Bitcoin Sans Proof-of-Work</h3>
+<p>Pour bien comprendre le rôle du Proof-of-Work, à mon avis il est utile d'imaginer ce qui se passerait en son absence. Dans cette situation, l'inclusion d'une nouvelle transaction suivrait les étapes ci-dessous:</p>
+<ol>
+  <li>Un utilisateur crée une transaction, et l'envoye au réseau.</li>
+  <ul>
+    <li>Cette transaction (est plusieurs autres) sont propagés complètement dans le réseau.<br>
+      <br>
+    </li>
+  </ul>
+  <li>Les mineurs vérifient toutes les transactions qu'ils reçoivent contre leur copie personelle du registre.<br>
+    <br>
+  </li>
+  <li>Les mineurs rassemblent plusieurs transactions valides dans un nouveau bloc, et les envoyent au réseau. <span style="font-style: italic;">Le mineur ajoute ce nouveau bloc à la chaîne las plus longue qu'ils connaissait au moment de sa production<span style="font-style: italic;">. </span></span>Les chaînes plus courtes sont rejetés.</li>
+  <ul>
+    <li>Ces blocs sont propagés complètement dans le réseau.<br>
+      <br>
+    </li>
+  </ul>
+  <li>Tous ceux qui reçoivent ce nouveau s'assurent qu'il est valide.
+Si oui, ils le gardent. Une fois que plusieurs nouveaux blocs y sont
+ajoutés, on peut être assez certain que ce bloc fait partie du registre
+permanent.<br>
+  </li>
+</ol>
+<p>La seule différence entre cette démarche et celle qui inclut le
+Proof-of-Work est une intruction qui manque à la troisième étape: après
+avoir rassemblé les transactions, le mineur trouve le "nonce" qui cause
+le hash du bloc à être plus petit que la difficulté du réseau.</p>
+<p>Y a-t-il des problèmes si on oublie le Proof-of-Work? La réponse est décidamment "oui":</p>
+<p><span style="text-decoration: underline;">Problème no. 1: Beaucoup de divergence</span></p>
+<p style="margin-left: 40px;">Dans ce scénario, la production d'un bloc
+est très rapide est prend presque exactement le même temps pour tous
+les mineurs. Donc, à l'étape 3 des milliers et des milliers de nouveaux
+blocs se font annoncer, et ils seront tous différents. Quand viendra le
+temps d'ajouter le prochain bloc, il y a des milliers de chaînes de
+longuer égale... laquelle devrait-on choisir? Dit d'une autre façon, il
+y a un énorme manque de consensus: tout le monde se chicanent!<br>
+</p>
+<span style="text-decoration: underline;">Problème no. 2: Facile à changer le registre<br>
+<br>
+</span>
+<div style="margin-left: 40px;"><br>
+</div>
+<br>
 Ce qui reste à expliquer:<br>
 <ul>
   <li>L'usage du Proof-of-Work comme méchanisme de consensus</li>
@@ -106,7 +153,7 @@ Juillet,
 2018 par Marco Merlini<br>
 
 
-Cette page a été modifiée le 27 Juillet, 2018 par Marco Merlini<br>
+Cette page a été modifiée le 30 Juillet, 2018 par Marco Merlini<br>
 
 
 <a href="PoW_Problems.html">English version</a><a href="index_fr.html"></a>

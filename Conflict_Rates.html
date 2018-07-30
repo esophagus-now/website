@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+
+
+
+
+
+
+  
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Orphan Rates</title>
+  
+
+  
+  
+  <style type="text/css">
+.code {
+  border-style: solid;
+  border-width: 1px;
+  max-width: 600px;
+}
+
+</style>
+  
+  <link rel="stylesheet" href="parwidths.css" type="text/css"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta http-equiv="content-type" content="text/html; charset=utf-8"></head><body>
+<a href="index.html">Home page</a><br>
+
+<h1>Block Propagation Time &amp; Conflicting Blocks Rate</h1>
+
+<h2>Probability Distribution of Block Times</h2>
+
+<p>Mining a block in a Proof-of-Work blockchain is very well modeled as
+a Possion process. Although <span style="font-style: italic;">technically</span>
+your search space will reduce if you find a nonce that doesn't work,
+the search space is so large (compared to what we're able to seach)
+that it may as well be infinite. Furthermore, individual hashes are
+occuring so quickly compared to expected block time that you can almost
+think of them as being continuous.</p>
+
+<p>Well, I know it's hand wavy, but it's enough to convince me.</p>
+
+<p>Knowing that finding a nonce is a Poisson process, we can deduce
+that the distribution of times <span style="font-style: italic;">between</span>
+successes follows an exponential distribution (this is a fundamental
+property of Poisson processes).</p>
+
+<p>Luckily for us, we can very safely assume the rate of this process
+is constant. In Bitcoin (and most other PoW blockchains) the network
+will dynamically adjust itself to maintain an expected block time. It's
+rare for the real world to cater itself so easily to simplified
+analysis!</p>
+
+<p>Using the following MATLAB/Octave code, I generated a plot of the
+(theoretical) block time distribution in bitcoin:</p>
+
+<pre class="code" style="background: rgb(255, 255, 255) none repeat scroll 0% 50%; color: rgb(0, 0, 0); font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">rate <span style="color: rgb(128, 128, 48);">=</span> 1<span style="color: rgb(128, 128, 48);">/</span>600<span style="color: rgb(128, 128, 48);">;</span> <span style="color: rgb(105, 105, 105);">% s^-1</span><br>ti <span style="color: rgb(128, 128, 48);">=</span> 0<span style="color: rgb(128, 128, 48);">;</span> <span style="color: rgb(105, 105, 105);">% Initial time = 0 s</span><br>tf <span style="color: rgb(128, 128, 48);">=</span> 4<span style="color: rgb(128, 128, 48);">/</span>rate<span style="color: rgb(128, 128, 48);">;</span> <span style="color: rgb(105, 105, 105);">% Final time = 4* (expected block time) in seconds</span><br>h <span style="color: rgb(128, 128, 48);">=</span> 10<span style="color: rgb(128, 128, 48);">;</span> <span style="color: rgb(105, 105, 105);">% Timestep = 10 s</span><br>t <span style="color: rgb(128, 128, 48);">=</span> <span style="color: rgb(187, 121, 119);">linspace</span><span style="color: rgb(128, 128, 48);">(</span>ti<span style="color: rgb(128, 128, 48);">,</span> tf<span style="color: rgb(128, 128, 48);">,</span> <span style="color: rgb(128, 128, 48);">(</span>tf<span style="color: rgb(128, 128, 48);">-</span>ti<span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">/</span>h<span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">;</span><br><br><span style="color: rgb(187, 121, 119);">figure</span><span style="color: rgb(128, 128, 48);">(</span>1<span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">;</span><br>clf<span style="color: rgb(128, 128, 48);">;</span><br><span style="color: rgb(187, 121, 119);">plot</span><span style="color: rgb(128, 128, 48);">(</span>t<span style="color: rgb(128, 128, 48);">/</span>60<span style="color: rgb(128, 128, 48);">,</span> rate<span style="color: rgb(128, 128, 48);">*</span><span style="color: rgb(187, 121, 119);">exp</span><span style="color: rgb(128, 128, 48);">(</span><span style="color: rgb(128, 128, 48);">-</span>rate <span style="color: rgb(128, 128, 48);">*</span> t<span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">;</span><br>title<span style="color: rgb(128, 128, 48);">(</span><span style="color: rgb(128, 0, 128);">'Theoretical Bitcoin Block Time Distribution'</span><span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">;</span><br>xlabel<span style="color: rgb(128, 128, 48);">(</span><span style="color: rgb(128, 0, 128);">'Time (min)'</span><span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">;</span><br>ylabel<span style="color: rgb(128, 128, 48);">(</span><span style="color: rgb(128, 0, 128);">'Probability Density'</span><span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">;</span></pre>
+
+
+<br>
+
+<p><img style="width: 500px; height: 371px;" alt="" src="images/btc_btime_dist.png"></p>
+
+<p>How does this compare to real measurements? I'm sure it compares
+very favourably, but I wasn't able to find a histogram of block times
+in under 5 minutes. I'll download some CSV data and make my own at some
+point in the future.</p>
+<h2>Probability of Two Miners Finding Conflicting Blocks</h2>
+<p>Consider two miners, with block finding rates rA and rB
+(respectively). Let A be the random variable representing the time for
+the first miner to find a block, and likewise for the random variable B. Before going on, let's look at a plot:</p>
+<p></p>
+<pre class="code" style="background: rgb(255, 255, 255) none repeat scroll 0% 50%; color: rgb(0, 0, 0); font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">rA <span style="color: rgb(128, 128, 48);">=</span> 1<span style="color: rgb(128, 128, 48);">/</span>1500<span style="color: rgb(128, 128, 48);">;</span> <span style="color: rgb(105, 105, 105);">% Miner A finds a block in 1500 seconds (on average)</span><br>rB <span style="color: rgb(128, 128, 48);">=</span> 1<span style="color: rgb(128, 128, 48);">/</span>2300<span style="color: rgb(128, 128, 48);">;</span> <span style="color: rgb(105, 105, 105);">% Miner B finds a block in 2300 seconds (on average)</span><br><br>ti <span style="color: rgb(128, 128, 48);">=</span> 0<span style="color: rgb(128, 128, 48);">;</span><br>tf <span style="color: rgb(128, 128, 48);">=</span> 4<span style="color: rgb(128, 128, 48);">/</span><span style="color: rgb(187, 121, 119);">min</span><span style="color: rgb(128, 128, 48);">(</span><span style="color: rgb(128, 128, 48);">[</span>rA<span style="color: rgb(128, 128, 48);">,</span> rB<span style="color: rgb(128, 128, 48);">]</span><span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">;</span> <span style="color: rgb(105, 105, 105);">% Make sure we have enough room to see</span><br>h <span style="color: rgb(128, 128, 48);">=</span> 10<span style="color: rgb(128, 128, 48);">;</span> <span style="color: rgb(105, 105, 105);">% 10 second resolution</span><br>t <span style="color: rgb(128, 128, 48);">=</span> <span style="color: rgb(187, 121, 119);">linspace</span><span style="color: rgb(128, 128, 48);">(</span>ti<span style="color: rgb(128, 128, 48);">,</span> tf<span style="color: rgb(128, 128, 48);">,</span> <span style="color: rgb(128, 128, 48);">(</span>tf <span style="color: rgb(128, 128, 48);">-</span> ti<span style="color: rgb(128, 128, 48);">)</span> <span style="color: rgb(128, 128, 48);">/</span> h<span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">;</span><br><br><span style="color: rgb(187, 121, 119);">figure</span><span style="color: rgb(128, 128, 48);">(</span>1<span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">;</span><br>clf<span style="color: rgb(128, 128, 48);">;</span><br><span style="color: rgb(187, 121, 119);">hold</span> on<span style="color: rgb(128, 128, 48);">;</span><br><span style="color: rgb(187, 121, 119);">plot</span><span style="color: rgb(128, 128, 48);">(</span>t<span style="color: rgb(128, 128, 48);">/</span>60<span style="color: rgb(128, 128, 48);">,</span> rA<span style="color: rgb(128, 128, 48);">*</span><span style="color: rgb(187, 121, 119);">exp</span><span style="color: rgb(128, 128, 48);">(</span><span style="color: rgb(128, 128, 48);">-</span>rA<span style="color: rgb(128, 128, 48);">*</span>t<span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">,</span> <span style="color: rgb(128, 0, 128);">'b-'</span><span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">;</span><br><span style="color: rgb(187, 121, 119);">plot</span><span style="color: rgb(128, 128, 48);">(</span>t<span style="color: rgb(128, 128, 48);">/</span>60<span style="color: rgb(128, 128, 48);">,</span> rB<span style="color: rgb(128, 128, 48);">*</span><span style="color: rgb(187, 121, 119);">exp</span><span style="color: rgb(128, 128, 48);">(</span><span style="color: rgb(128, 128, 48);">-</span>rB<span style="color: rgb(128, 128, 48);">*</span>t<span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">,</span> <span style="color: rgb(128, 0, 128);">'r--'</span><span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">;</span><br><span style="color: rgb(187, 121, 119);">legend</span><span style="color: rgb(128, 128, 48);">(</span>{<span style="color: rgb(128, 0, 128);">'Miner A'</span><span style="color: rgb(128, 128, 48);">,</span> <span style="color: rgb(128, 0, 128);">'Miner B'</span>}<span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">;</span><br>title<span style="color: rgb(128, 128, 48);">(</span><span style="color: rgb(128, 0, 128);">'Block Time Distributions for Two Miners'</span><span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">;</span><br>xlabel<span style="color: rgb(128, 128, 48);">(</span><span style="color: rgb(128, 0, 128);">'Time (min)'</span><span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">;</span><br>ylabel<span style="color: rgb(128, 128, 48);">(</span><span style="color: rgb(128, 0, 128);">'Probability Density'</span><span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">;</span></pre>
+
+
+<br>
+<p><img style="width: 500px; height: 375px;" alt="" src="images/two_miners.png"></p>
+<p>Well that's all fine and dandy, but now I want to ask a question:
+"What is the probability that the miners will generate a conflicting
+block?" This would happen if the time difference between both miners
+finding a block was less than the time it would have taken to send that
+block over the network (and the time to process it on your copmuter).</p>
+<p>From the theory of probability distributions, the PDF of the
+difference of two random variables is the cross-correlation of their
+PDFs (if they are independent).We can easily do this numerically: </p>
+<p></p>
+<pre class="code" style="background: rgb(255, 255, 255) none repeat scroll 0% 50%; color: rgb(0, 0, 0); font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">rA <span style="color: rgb(128, 128, 48);">=</span> 1<span style="color: rgb(128, 128, 48);">/</span>1500<span style="color: rgb(128, 128, 48);">;</span> <span style="color: rgb(105, 105, 105);">% Miner A finds a block in 1500 seconds (on average)</span><br>rB <span style="color: rgb(128, 128, 48);">=</span> 1<span style="color: rgb(128, 128, 48);">/</span>2300<span style="color: rgb(128, 128, 48);">;</span> <span style="color: rgb(105, 105, 105);">% Miner B finds a block in 2300 seconds (on average)</span><br><br>ti <span style="color: rgb(128, 128, 48);">=</span> 0<span style="color: rgb(128, 128, 48);">;</span><br>tf <span style="color: rgb(128, 128, 48);">=</span> 4<span style="color: rgb(128, 128, 48);">/</span><span style="color: rgb(187, 121, 119);">min</span><span style="color: rgb(128, 128, 48);">(</span><span style="color: rgb(128, 128, 48);">[</span>rA<span style="color: rgb(128, 128, 48);">,</span> rB<span style="color: rgb(128, 128, 48);">]</span><span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">;</span> <span style="color: rgb(105, 105, 105);">% Make sure we have enough room to see</span><br>h <span style="color: rgb(128, 128, 48);">=</span> 10<span style="color: rgb(128, 128, 48);">;</span> <span style="color: rgb(105, 105, 105);">% 10 second resolution</span><br>t <span style="color: rgb(128, 128, 48);">=</span> <span style="color: rgb(187, 121, 119);">linspace</span><span style="color: rgb(128, 128, 48);">(</span>ti<span style="color: rgb(128, 128, 48);">,</span> tf<span style="color: rgb(128, 128, 48);">,</span> <span style="color: rgb(128, 128, 48);">(</span>tf <span style="color: rgb(128, 128, 48);">-</span> ti<span style="color: rgb(128, 128, 48);">)</span> <span style="color: rgb(128, 128, 48);">/</span> h<span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">;</span><br><br>distA <span style="color: rgb(128, 128, 48);">=</span> rA<span style="color: rgb(128, 128, 48);">*</span><span style="color: rgb(187, 121, 119);">exp</span><span style="color: rgb(128, 128, 48);">(</span><span style="color: rgb(128, 128, 48);">-</span>rA<span style="color: rgb(128, 128, 48);">*</span>t<span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">;</span><br>distB <span style="color: rgb(128, 128, 48);">=</span> rB<span style="color: rgb(128, 128, 48);">*</span><span style="color: rgb(187, 121, 119);">exp</span><span style="color: rgb(128, 128, 48);">(</span><span style="color: rgb(128, 128, 48);">-</span>rB<span style="color: rgb(128, 128, 48);">*</span>t<span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">;</span><br><br>diff_dist <span style="color: rgb(128, 128, 48);">=</span> xcorr<span style="color: rgb(128, 128, 48);">(</span>distA<span style="color: rgb(128, 128, 48);">,</span> distB<span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">;</span> <br><span style="color: rgb(105, 105, 105);">% Because we're working with discrete signals as opposed to continuous, we</span><br><span style="color: rgb(105, 105, 105);">% need to "divide by the sampling frequency" after doing the cross</span><br><span style="color: rgb(105, 105, 105);">% correlation:</span><br>diff_dist <span style="color: rgb(128, 128, 48);">=</span> diff_dist<span style="color: rgb(128, 128, 48);">*</span>h<span style="color: rgb(128, 128, 48);">;</span><br><br><span style="color: rgb(187, 121, 119);">figure</span><span style="color: rgb(128, 128, 48);">(</span>1<span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">;</span><br>clf<span style="color: rgb(128, 128, 48);">;</span><br>l <span style="color: rgb(128, 128, 48);">=</span> <span style="color: rgb(187, 121, 119);">length</span><span style="color: rgb(128, 128, 48);">(</span>diff_dist<span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">;</span><br>t_corr <span style="color: rgb(128, 128, 48);">=</span> <span style="color: rgb(187, 121, 119);">linspace</span><span style="color: rgb(128, 128, 48);">(</span><span style="color: rgb(128, 128, 48);">.</span><span style="color: rgb(128, 128, 48);">.</span><span style="color: rgb(128, 128, 48);">.</span><br>    ti <span style="color: rgb(128, 128, 48);">-</span> <span style="color: rgb(128, 128, 48);">(</span>l <span style="color: rgb(128, 128, 48);">-</span> 1<span style="color: rgb(128, 128, 48);">)</span> <span style="color: rgb(128, 128, 48);">*</span> h<span style="color: rgb(128, 128, 48);">,</span> <span style="color: rgb(128, 128, 48);">.</span><span style="color: rgb(128, 128, 48);">.</span><span style="color: rgb(128, 128, 48);">.</span><br>    ti <span style="color: rgb(128, 128, 48);">+</span> <span style="color: rgb(128, 128, 48);">(</span>l <span style="color: rgb(128, 128, 48);">-</span> 1<span style="color: rgb(128, 128, 48);">)</span> <span style="color: rgb(128, 128, 48);">*</span> h<span style="color: rgb(128, 128, 48);">,</span> <span style="color: rgb(128, 128, 48);">.</span><span style="color: rgb(128, 128, 48);">.</span><span style="color: rgb(128, 128, 48);">.</span><br>    l <span style="color: rgb(128, 128, 48);">.</span><span style="color: rgb(128, 128, 48);">.</span><span style="color: rgb(128, 128, 48);">.</span><br><span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">;</span> <span style="color: rgb(105, 105, 105);">% It's a good thing I took signals and DSP from Dr. Stevenson!</span><br><span style="color: rgb(187, 121, 119);">plot</span><span style="color: rgb(128, 128, 48);">(</span>t_corr<span style="color: rgb(128, 128, 48);">/</span>60<span style="color: rgb(128, 128, 48);">,</span> diff_dist<span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">;</span><br>title<span style="color: rgb(128, 128, 48);">(</span><span style="color: rgb(128, 0, 128);">'Probability Density of Time Difference'</span><span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">;</span><br>xlabel<span style="color: rgb(128, 128, 48);">(</span><span style="color: rgb(128, 0, 128);">'Time (min)'</span><span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">;</span><br>ylabel<span style="color: rgb(128, 128, 48);">(</span><span style="color: rgb(128, 0, 128);">'Probability Density'</span><span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">;</span></pre>
+<br>
+<p><img style="width: 500px; height: 371px;" alt="" src="images/difference_dist.png"></p>
+<p>Now if the average time for blocks to be propagated and accepted by other miners is 50 minutes (this is <span style="font-style: italic;">not</span>
+the real number),
+then we can find the probability of collision between miners A and B by
+intergating the above distribution between -50 and +50 minutes. Simply run this code immediately after generating the
+last plot:<br>
+</p>
+<pre class="code" style="background: rgb(255, 255, 255) none repeat scroll 0% 50%; color: rgb(0, 0, 0); font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;"><span style="color: rgb(187, 121, 119);">hold</span> on<span style="color: rgb(128, 128, 48);">;</span><br>indices <span style="color: rgb(128, 128, 48);">=</span> <span style="color: rgb(187, 121, 119);">find</span><span style="color: rgb(128, 128, 48);">(</span><span style="color: rgb(187, 121, 119);">abs</span><span style="color: rgb(128, 128, 48);">(</span>t_corr<span style="color: rgb(128, 128, 48);">)</span> <span style="color: rgb(128, 128, 48);">&lt;</span> 50<span style="color: rgb(128, 128, 48);">*</span>60<span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">;</span><br><br>area<span style="color: rgb(128, 128, 48);">(</span>t_corr<span style="color: rgb(128, 128, 48);">(</span>indices<span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">/</span>60<span style="color: rgb(128, 128, 48);">,</span> diff_dist<span style="color: rgb(128, 128, 48);">(</span>indices<span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">;</span><br><span style="color: rgb(187, 121, 119);">fprintf</span><span style="color: rgb(128, 128, 48);">(</span><span style="color: rgb(128, 0, 128);">'The probability of collision between miners A and B is %g%%\n'</span><span style="color: rgb(128, 128, 48);">,</span><span style="color: rgb(128, 128, 48);">.</span><span style="color: rgb(128, 128, 48);">.</span><span style="color: rgb(128, 128, 48);">.</span><br>    trapz<span style="color: rgb(128, 128, 48);">(</span>diff_dist<span style="color: rgb(128, 128, 48);">(</span>indices<span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">*</span>h<span style="color: rgb(128, 128, 48);">*</span>100<span style="color: rgb(128, 128, 48);">)</span><span style="color: rgb(128, 128, 48);">;</span></pre>
+
+<img style="width: 500px; height: 371px;" alt="" src="images/collision_prob.png"><br>
+The output of this code was 54%.<br>
+<h2>Total Probability of Conflicting Blocks in Real Blockchains</h2>
+<p>This is exciting: we'll use our notion of conflict probability to
+actually predict the number of conflicting blcoks we would expect to
+see in Bitcoin and Ethereum.</p>
+<p>To do this we need to think about each miner's contribution to the
+total rate of conflicts. Essentially, for each miner, we'll let rA be
+that miner's rate of block discovery, and rB the rate of block
+discovery due to the rest of the network.&nbsp;</p>
+<p><br>
+</p>
+
+<p><br>
+</p>
+
+</body></html>
