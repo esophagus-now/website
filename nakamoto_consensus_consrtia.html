@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+
+<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Nakamoto Consensus for Consortia</title><style type="text/css"></style><link rel="stylesheet" href="parwidths.css" type="text/css"></head><body><a href="index.html">Home page</a><br>
+<br>
+<h1>Nakamoto Consensus for Consortium Blockchains</h1>
+<p>I'm not sure that this is an accepted term of art yet, but here I use <span style="font-style: italic;">consortium blockchain</span>
+to mean a distributed ledger shared among a consortium of companies.
+For example, a handful of banks may wish to keep a shared ledger for
+inter-bank transactions. <br>
+</p>
+<h2>Hyperledger (and its Alternatives) are not Blockchain</h2>
+<p>Hyperledger calls itself a blockchain, but that's like calling a linked list a blockchain. Yes, <span style="font-style: italic;">technically</span>
+it stores information in blocks which reference each other, but this is
+not a new idea. Remember that Nakamoto Consensus is the major
+technological development around here; Hyperledger does not use any new
+ideas whatsoever.<br>
+</p>
+<p>Let's take a trip back in time to the early 2000s. The e-Estonia
+movement (to digitize the government of Estonia) is in full swing, and
+X-Road is released for use. X-Road is essentially a data distribution
+platform with the following properties:</p>
+
+<ul>
+  <li>Any particular datum is stored only in the following locations:</li>
+  <ul>
+    <li>On the computers of the appropriate governing body (e.g. a
+driver's license is stored in the Department of Transportation's
+computers, but not the Department of Education's)</li>
+    <li>In backup locations (Estonia currently backs up all its state records in Luxembourg. No joke!)</li>
+    <li>On the computers of any governmental body that requires the
+information (e.g. your driver"s license may be requested and stored on
+the copmuters of the police force)</li>
+  </ul>
+  <li>Hundreds of government agencies and companies use X-Road as their database software</li>
+  <li>Separate instances of X-Road communicate over the internet. Each
+instance defines which data can be sent to whom, and under what
+circumstances.</li>
+  <li>All traffic is secured via cryptography, and all identities verified by digital signature</li>
+</ul>
+<p>As evidenced by the Luxembourg backup, X-Road also facilitates
+shared databases between agencies (although it does require the
+agencies to configure their systems appropriately).<br>
+</p>
+<p>Let's also talk about server pools and load balancing. These ideas
+have been around for ages, and are another example of distributed
+database technology predating hyperledger. Esentially, a webapp will
+set up multiple servers which are all capable of offering the same
+service, and split its requests among all servers. <br>
+</p>
+<p>Basically, Hyperledger <span style="font-style: italic;">does</span> have a valid use case, but it is <span style="font-style: italic;">not</span> new technology, and in my opinion they are only calling it blockchain as a marketing gimmick.</p>
+<h2>Ok, we've listened to your rant, but can we get to the point?</h2>
+<p>Hyperledger can (by design) accommodate different consensus
+algorithms. Right now, most people use a Byzantine Fault-Tolerant (BFT)
+algorithm. However, most BFT derivatives can only work on fewer than
+ten nodes. So in a large network, around ten nodes will become a sort
+of central authority on which transactions get included and in what
+order.</p>
+<p>The beauty of Nakamoto Consensus (currently synonymous with
+Proof-of-Work) is that it makes consensus among thousands of nodes
+possible. Is there some way to use it inside Hyperledger?</p>
+<p>I think the answer is yes, and I talk about how that might be possible on <a href="arms_race.html">this other rough page</a>.<br>
+</p>
+
+</body></html>

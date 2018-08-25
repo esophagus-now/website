@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+
+<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>The PoW Arms Race</title><style type="text/css">
+table {
+  max-width: 500px;
+  margin-left: 50px;
+}
+
+</style><link rel="stylesheet" href="parwidths.css" type="text/css"></head><body><a href="index.html">Home page</a><br>
+<br>
+<h1>The Proof-of-Work Arms Race</h1>
+<p><span style="font-style: italic;"><span style="font-style: italic;"></span></span>Allow
+me to say something controversial: Proof-of-Work is not inefficient.
+The usual argument against PoW goes something like this:</p>
+<ul>
+  <li>So much electricity is wasted. Hashing doesn't benefit anybody.<br>
+  </li>
+  <li>Blockchain isn't scalable because every transaction requires a lot of hashing work.</li>
+</ul>
+<p>At least from an economic point of view, I don't think it's
+reasonable to say that the electricity used in PoW is wasted. Every
+miner who hashes, even if they don't produce a block, does contribute
+to the usefulness of the system. In some sense, that's the price paid
+for decentralization.</p>
+<p>Another common argument is this: "Why not replace hashing with
+something more useful? And while we're at it, why not use the heat
+produced by the computational work to warm us up in the wintertime?" At
+first, this seems reasonable. But you see, changing the hashing to
+something more useful (as well as using the heat) simply serves to
+increase the revenue from mining. Thus, since your expected revenue is
+higher, you'll be willing to increase your mining power. This is the
+"marginal cost, marginal revenue" principle. <br>
+</p>
+<p style="margin-left: 40px; max-width: 560px;">(EDIT: this doesn't
+paint the whole picture. Let's say that right now you're spending
+$100/day on mining, and making some amount of profit.Someone comes by
+and says that they'll sell you a rig that costs $50 a day to run.
+Should you buy it? Well, it depends; would your revenue increase by
+more than $50/day? If not, then you will be making less money, even if
+your total revenue is increased. In the case of doing useful work with
+PoW, you would only increase your hashing power as long as the expected
+<span style="font-style: italic;">increase </span>in revenue is higher
+than your increase in costs. My argument is that you would still
+increase your hashing power if it had secondary uses)<br></p>
+<p>The last misconception is to say that bitcoin is slow because of
+PoW. This is not really true. Actually, it's up to the blockchain's
+developer to decide on the block time (i.e. the expected amount of time
+between blocks). In bitcoin this was set to 10 minutes (I'm not aware
+of the reason) and in Ethereum it is 12 seconds. In Ethereum's case,
+this was about the lowest they could push it; if you let your block
+time get too short, then the network latency will cause a tremendous
+amount of forks. I talk about this is more detail on the <a href="throughput.html">throughput page</a>.</p>
+<h2>"I still find it hard to believe that PoW isn't inefficient"</h2>
+<p>Well, I can't blame you for thinking that. It's a fact that it
+consumes a lot of energy, and likely a lot more than is theoretically
+required. And the title of this page should hint at what's coming
+next...</p>
+<p>Here is the hypothesis: Nakamoto consensus is a very clever
+innovation in distributed databses which, among other things, makes
+cryptocurrencies possible. Proof-of-Work is necessary in Nakamoto
+consensus, <span style="font-style: italic;">but the "arms race" isn't!</span></p>
+<h2>The Game Theory Behind Arms Races/PoW</h2>
+<p>Most of this is directly copied from William Spaniel's excellent <a href="https://www.youtube.com/watch?v=K9f5z0Lc888">Game Theory 101 video</a>.
+Consider two countries (A and B) that have an equal amount of weapons.
+Should either of the countries start spending on more weapons?</p>
+<p>If country A buys weapons, and country B doesn't, then A has now
+gained an advantage and B is at a disadvantage. If both countries buy
+weapons, then both countries have essentially wasted money (but this is
+not as bad as letting the other country gain the upper hand). If
+neither country buys weapons, then everything stays the same. Let's
+organize this into a payoff matrix:</p>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;">A/B<br>
+      </td>
+      <td style="vertical-align: top;">Don't Buy<br>
+      </td>
+      <td style="vertical-align: top;">Buy<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Don't Buy<br>
+      </td>
+      <td style="vertical-align: top;">0 / 0<br>
+      </td>
+      <td style="vertical-align: top;">-2 / 2<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Buy<br>
+      </td>
+      <td style="vertical-align: top;">2 / -2<br>
+      </td>
+      <td style="vertical-align: top;">-1 / -1<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>This situation is very reminiscent of buying hashing power. If you
+buy more, and your competition doesn't, then you gain an advantage over
+them. If nobody buys more, then nothing changes. If everyone buys more,
+then everyone is essentially wasting money!<br>
+</p>
+<p>It doesn't take long to notice that this is a classic Prisoner's
+Dilemma situation. All miners will continue to buy more hashing power
+despite very diminishing returns in revenue, since that is a dominant
+strategy. What we see here is an inefficient Nash equilibrium.</p>
+<h2>Is it Possible to Lower Bitcoin's Energy Usage?<br>
+</h2>
+<p>Absolutely! All you have to do (it's really nothing) is get all
+miners on the planet to give up half of their hashing power. Easy! All
+miners would continue to earn the exact same revenue, but only pay half
+the electricity costs!<br></p>
+<p>
+So clearly no miner would ever agree to sell off half of their hashing
+power. If they did, they would be more vulnerable to losing revenue in
+the future if e.g. more miners joined the network. Also, each miner
+thinks to themselves "I will make way more money if I'm the only one
+who doesn't cut their power in half". Game theory keeps coming back to bite us.</p>
+
+<p>Right now I see two options that might be worth looking into.</p>
+<ol>
+  <li>Coming up with some fancy PoW function that guarantees all miners have roughly equal power. I have <span style="font-style: italic;">no</span> idea how this would work.</li>
+  <li>In a permissioned system, you could simply count the number of blocks one miner is accumulating. Contrary to an arms race (where
+the only way to equalize would be for all other miners to match power)
+you could simply adjust the difficulty parameter for that one miner.
+There was a paper published about this recently, but I can't quite find
+it at the moment. Hopefully I'll remember to link it in in the near
+future.</li>
+</ol>
+<p>One reason PoW works so well is because it is virtually impossible
+for one person to hold up the whole system (i.e. some kind of DoS
+attack). In PoS, PoA, Algorand, etc. there are cases where you can
+temporarily disrupt block creation by simply not participating. So if
+we found an automatically-adjusting PoW function, we would like it to
+maintain this robust liveness.</p>
+<p><br>
+</p>
+<p><br>
+</p>
+</body></html>

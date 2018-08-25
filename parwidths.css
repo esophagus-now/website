@@ -9,4 +9,7 @@ img {
   width: 500px;
   height: auto;
 }
-
+.disclaimer {
+  border-style: solid;
+  border-width: 1px;
+}

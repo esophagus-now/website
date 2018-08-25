@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+
+
+<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Feedback Rewards</title><style type="text/css"></style><link rel="stylesheet" href="parwidths.css" type="text/css"></head><body>
+  <a href="index.html">Home page</a><br>
+<br>
+<p class="disclaimer">I still haven't found a good way to embed math
+symbols into text. For now I'll leave the raw LaTeX code so that you
+can tell what I mean. <br></p>
+<h1>Incentive Compatible Feedback Rewards</h1>
+<p>A few months ago my supervisor's group (not including me, since I
+hadn't started yet) produced what was essentially the first
+decentralized blockchain oracle. They named it <font style="font-variant: small-caps;">Astraea</font>, after the Greek goddess of innocence. You can find the paper <a href="https://pdfs.semanticscholar.org/e6f9/77049b78664a485ffe6b671c41bd2cef125f.pdf">here</a>. Shortly after its publication, someone
+by the name of Ryuuji Kamiya announced <a href="https://gitlab.com/shintaku-group/paper/raw/master/shintaku.pdf">Shintaku</a>,
+which is essentially an improved version of <font style="font-variant: small-caps;">Astraea</font> (complete with working smart
+contract code).</p>
+<p>The main idea is to ask a question, and let anybody on a public
+blockchain answer it. We incentivize honest answers with incentive
+compatible rewards. That is, anyone who wants to participate is
+guaranteed that honest voting is the best strategy to maximize payoffs.
+Thus, if a few hundred people answer a question, and we know that they
+knew that honesty was literally the best policy, then we can feel very
+confident that the final output is trustworthy.</p>
+<p>This article is a sort of "staging area" for information that will eventually get into the <a href="Decentralized_Oracle.html">decentralized oracle</a> page.</p>
+<h2><font style="font-variant: small-caps;">Astraea</font>'s Architecture</h2>
+<p>The following figure is stolen from the original paper. <span style="font-style: italic;">Comment:
+I think everyone should put a figure like this in their papers. Every
+moving part is summarized in one diagram, which makes reading the paper
+easy and fruitful. It also ends up being a great way to quickly remind
+yourself how something works.</span><br>
+</p>
+<p><img style="border: 1px solid ; width: 500px; height: 312px;" alt="" src="images/astraea.png" hspace="50"></p>
+On the left we have the proposition list. Each entry is a proposition
+(i.e. a yes/no question) and its associated bounty (i.e. a payment sent
+by that proposition's original submitter, used as the source of
+payments to voters).<br>
+<p>
+On the bottom we have the participants, the people who actually provide answers to questions. The participants can be <span style="font-style: italic;">voters</span> or <span style="font-style: italic;">certifiers</span>.
+As indiciated by the arrows to/from the proposition list, a voter $i$
+receives a random proposition $r$, to which they submit their vote $v$
+and a stake $s_{i,r,v}$. Certifiers are similar to voters, except that
+they do not receive a random proposition. Instead, they simply submit a
+stake $\sigma_{i,j,c}$ and a vote $c$ to a proposition of their choice
+($j$).</p>
+<p>There is two more major differences between voters and certifiers. First, there is a relatively small <span style="font-style: italic;">maximum</span>  stake for voters, whereas there is a relatively large <span style="font-style: italic;">minimum</span> stake for certifiers. As shown by the dotted boxes, a participant may choose to be both a voter and a certifier.
+Secondly, voters are rewarded directly by the bounty sent by the
+proposition's submitter, whereas certifiers are rewarded from the <span style="font-style: italic;">reward pools</span> (shown on the top right as a pot for true answers and a pot for false answers).</p>
+<p>The purpose of sending a stake with every vote is to enable penalties. It is not enough to simply reward honesty <span style="font-style: italic;">more</span>
+than any other strategy; bad behaviour should have a sub-zero reward.
+Otherwise, even though honest behaviour might be a more fast/efficient
+way to make money, a dishonest user could still make profits by acting
+lazily/maliciously.This is undesirable. Note that it is the penalties that are used to fill the reward pools. </p>
+<p>Birefly, after voting is finished on a proposition, the majority
+answers from both voters and certifiers are compared. If they are the
+same, we can hand out rewards. Otherwise, we will not output any answer
+for that question (in some sense, a disagreement between voters and
+certifiers signals that the issue is contentious or that honest and
+dishonest voters were fighting over the answer). There are separate
+true and false reward pools for certifiers, which are filled if the
+majority vote was false or true (respectively).Separating the rewards by answer
+acts to fight against a lazy equilibrium, where everyone always votes
+true and trivially achieves maximum rewards (and no one wants to
+provide an honest "false" answer or else they'll get penalized).</p>
+<p>I make <span style="font-style: italic;">no claim</span> that I have fully or even correctly explained <font style="font-variant: small-caps;">Astraea</font>. As far as academic papers go, this one is well written and fairly easy to read, so I refer you there for the proper details.</p>
+<h2>Shintaku<br>
+</h2>
+<p></p>
+<br>
+</body></html>
